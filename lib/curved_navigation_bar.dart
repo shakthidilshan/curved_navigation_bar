@@ -12,10 +12,14 @@ class CurvedNavigationBar extends StatefulWidget {
   final Curve animationCurve;
   final Duration animationDuration;
   final double height;
+  final double gap;
+  final List<String>? itemNames;
 
   CurvedNavigationBar({
     Key? key,
     required this.items,
+    this.itemNames,
+    this.gap = 100,
     this.index = 0,
     this.color = Colors.white,
     this.buttonBackgroundColor,
@@ -136,22 +140,72 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
             right: 0,
             bottom: 0 - (75.0 - widget.height),
             child: SizedBox(
-                height: 100.0,
+                height: widget.gap,
                 child: Row(
                     children: widget.items.map((item) {
-                  return NavButton(
-                    onTap: _buttonTap,
-                    position: _pos,
-                    length: _length,
-                    index: widget.items.indexOf(item),
-                    child: Center(child: item),
-                  );
+                  if (widget.itemNames == null) {
+                    return NavButton(
+                      onTap: _buttonTap,
+                      position: _pos,
+                      length: _length,
+                      index: widget.items.indexOf(item),
+                      child: Center(child: item),
+                    );
+                  } else {
+                    return NavButton(
+                      onTap: _buttonTap,
+                      position: _pos,
+                      length: _length,
+                      index: widget.items.indexOf(item),
+                      child: Center(
+                          child: Column(
+                        children: [
+                          item,
+                          Text(
+                            widget.itemNames![widget.items.indexOf(item)],
+                            style: TextStyle(
+                                fontSize: 10, fontWeight: FontWeight.w400),
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      )),
+                    );
+                  }
                 }).toList())),
           ),
         ],
       ),
     );
   }
+
+  // List<Widget> _getItems() {
+  //   List<Widget> buttons = [];
+  //   for (int i = 0; i < widget.items.length; i++) {
+  //     var item = widget.items[i];
+
+  //     buttons.add(
+  //       NavButton(
+  //         onTap: _buttonTap,
+  //         position: _pos,
+  //         length: _length,
+  //         index: i, // Using the loop index directly
+  //         child: Center(
+  //           child: Column(
+  //             children: [
+  //               item,
+  //               Text(
+  //                 "Label",
+  //                 style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
+  //                 textAlign: TextAlign.center,
+  //               )
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     );
+  //   }
+  //   return buttons;
+  // }
 
   void setPage(int index) {
     _buttonTap(index);
