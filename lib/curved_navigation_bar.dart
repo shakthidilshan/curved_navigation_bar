@@ -14,6 +14,7 @@ class CurvedNavigationBar extends StatefulWidget {
   final double height;
   final double gap;
   final List<String>? itemNames;
+  final TextStyle? style;
 
   CurvedNavigationBar({
     Key? key,
@@ -21,6 +22,7 @@ class CurvedNavigationBar extends StatefulWidget {
     this.itemNames,
     this.gap = 100,
     this.index = 0,
+    this.style,
     this.color = Colors.white,
     this.buttonBackgroundColor,
     this.backgroundColor = Colors.blueAccent,
@@ -31,6 +33,7 @@ class CurvedNavigationBar extends StatefulWidget {
   })  : assert(items.length >= 1),
         assert(0 <= index && index < items.length),
         assert(0 <= height && height <= 75.0),
+        assert(itemNames == null || items.length == itemNames.length),
         super(key: key);
 
   @override
@@ -163,8 +166,9 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
                           item,
                           Text(
                             widget.itemNames![widget.items.indexOf(item)],
-                            style: TextStyle(
-                                fontSize: 10, fontWeight: FontWeight.w400),
+                            style: widget.style ??
+                                TextStyle(
+                                    fontSize: 10, fontWeight: FontWeight.w400),
                             textAlign: TextAlign.center,
                           )
                         ],
@@ -177,35 +181,6 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
       ),
     );
   }
-
-  // List<Widget> _getItems() {
-  //   List<Widget> buttons = [];
-  //   for (int i = 0; i < widget.items.length; i++) {
-  //     var item = widget.items[i];
-
-  //     buttons.add(
-  //       NavButton(
-  //         onTap: _buttonTap,
-  //         position: _pos,
-  //         length: _length,
-  //         index: i, // Using the loop index directly
-  //         child: Center(
-  //           child: Column(
-  //             children: [
-  //               item,
-  //               Text(
-  //                 "Label",
-  //                 style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
-  //                 textAlign: TextAlign.center,
-  //               )
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //     );
-  //   }
-  //   return buttons;
-  // }
 
   void setPage(int index) {
     _buttonTap(index);

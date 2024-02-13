@@ -23,6 +23,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
           height: 50.0,
           gap: 70,
           itemNames: ["Home", "Payment", "Bills", "Social", "User"],
+          style: TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: 12.00,
+              color: Colors.black),
           items: <Widget>[
             Icon(Icons.add, size: 25),
             Icon(Icons.list, size: 25),
